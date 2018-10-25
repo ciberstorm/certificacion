@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/10/2018 12:07:27 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Curso" table="curso" catalog="centrocultural" optimistic-lock="version">
+        <id name="idcurso" type="java.lang.Integer">
+            <column name="idcurso" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="profesor" class="Modelo.Profesor" fetch="select">
+            <column name="idprofesor" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" />
+        </property>
+        <property name="duracion" type="string">
+            <column name="duracion" length="45" />
+        </property>
+        <property name="horas" type="string">
+            <column name="horas" length="45" />
+        </property>
+        <property name="aula" type="string">
+            <column name="aula" length="45" />
+        </property>
+        <property name="cupo" type="string">
+            <column name="cupo" length="45" />
+        </property>
+        <property name="idtematica" type="int">
+            <column name="idtematica" not-null="true" />
+        </property>
+        <set name="inscripcions" table="inscripcion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idcurso" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.Inscripcion" />
+        </set>
+    </class>
+</hibernate-mapping>

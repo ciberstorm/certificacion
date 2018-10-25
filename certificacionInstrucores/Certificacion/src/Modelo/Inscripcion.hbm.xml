@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/10/2018 12:07:27 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Inscripcion" table="inscripcion" catalog="centrocultural" optimistic-lock="version">
+        <id name="idinscripcion" type="java.lang.Integer">
+            <column name="idinscripcion" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="curso" class="Modelo.Curso" fetch="select">
+            <column name="idcurso" not-null="true" />
+        </many-to-one>
+        <many-to-one name="participante" class="Modelo.Participante" fetch="select">
+            <column name="idparticipante" not-null="true" />
+        </many-to-one>
+        <property name="fecha" type="date">
+            <column name="fecha" length="10" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>
