@@ -1,0 +1,108 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema CentroCultural
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema CentroCultural
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `CentroCultural` DEFAULT CHARACTER SET utf8 ;
+USE `CentroCultural` ;
+
+-- -----------------------------------------------------
+-- Table `CentroCultural`.`profesor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CentroCultural`.`profesor` (
+  `idprofesor` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  PRIMARY KEY (`idprofesor`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `CentroCultural`.`curso`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CentroCultural`.`curso` (
+  `idcurso` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  `duracion` VARCHAR(45) NULL,
+  `horas` VARCHAR(45) NULL,
+  `aula` VARCHAR(45) NULL,
+  `cupo` VARCHAR(45) NULL,
+  `idprofesor` INT NOT NULL,
+  PRIMARY KEY (`idcurso`),
+  INDEX `idprofesor_idx` (`idprofesor` ASC),
+  CONSTRAINT `idprofesor`
+    FOREIGN KEY (`idprofesor`)
+    REFERENCES `CentroCultural`.`profesor` (`idprofesor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `CentroCultural`.`participante`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CentroCultural`.`participante` (
+  `idparticipante` INT NOT NULL AUTO_INCREMENT,
+  `apellido` VARCHAR(45) NULL,
+  `nombre` VARCHAR(45) NULL,
+  `fechan` DATE NULL,
+  `tutor` VARCHAR(45) NULL,
+  `tel` VARCHAR(45) NULL,
+  `dire` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  PRIMARY KEY (`idparticipante`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `CentroCultural`.`inscripcion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CentroCultural`.`inscripcion` (
+  `idinscripcion` INT NOT NULL AUTO_INCREMENT,
+  `idparticipante` INT NOT NULL,
+  `idcurso` INT NOT NULL,
+  `fecha` DATE NULL,
+  `estado` VARCHAR(45) NULL,
+  PRIMARY KEY (`idinscripcion`),
+  INDEX `idparticipante_idx` (`idparticipante` ASC),
+  INDEX `idcurso_idx` (`idcurso` ASC),
+  CONSTRAINT `idparticipante`
+    FOREIGN KEY (`idparticipante`)
+    REFERENCES `CentroCultural`.`participante` (`idparticipante`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idcurso`
+    FOREIGN KEY (`idcurso`)
+    REFERENCES `CentroCultural`.`curso` (`idcurso`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `CentroCultural`.`tematica`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CentroCultural`.`tematica` (
+  `idtematica` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  `idcurso` INT NOT NULL,
+  PRIMARY KEY (`idtematica`),
+  INDEX `idcurso_idx` (`idcurso` ASC),
+  CONSTRAINT `idcurso`
+    FOREIGN KEY (`idcurso`)
+    REFERENCES `CentroCultural`.`curso` (`idcurso`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
